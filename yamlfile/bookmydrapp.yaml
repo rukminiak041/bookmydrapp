@@ -7,7 +7,7 @@ metadata:
   labels:
     app: "bookmydrapp"
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: "bookmydrapp"
@@ -18,12 +18,12 @@ spec:
     spec:
       containers:
       - name: "bookmydrapp-sha256-1"
-        image: "gcr.io/charged-ground-326209/github.com/rukminiak041/bookmydrapp@sha256:3f3e941dd99cb2b6143739486430c3a5c71f9f3e1b899f698978889e92271125"
+        image: "gcr.io/charged-ground-326209/github.com/rukminiak041/bookmydrapp@sha256:07ebf8915306f3eaf648149c5dd0b7b3e7a86dee55ac1a2580a80d321716b32e"
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "bookmydrapp-hpa-5xmo"
+  name: "bookmydrapp-hpa-dpjl"
   namespace: "default"
   labels:
     app: "bookmydrapp"
@@ -33,3 +33,9 @@ spec:
     name: "bookmydrapp"
     apiVersion: "apps/v1"
   minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
