@@ -1,0 +1,35 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "bookmydrapp"
+  namespace: "default"
+  labels:
+    app: "bookmydrapp"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "bookmydrapp"
+  template:
+    metadata:
+      labels:
+        app: "bookmydrapp"
+    spec:
+      containers:
+      - name: "bookmydrapp-sha256-1"
+        image: "gcr.io/charged-ground-326209/github.com/rukminiak041/bookmydrapp@sha256:3f3e941dd99cb2b6143739486430c3a5c71f9f3e1b899f698978889e92271125"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "bookmydrapp-hpa-5xmo"
+  namespace: "default"
+  labels:
+    app: "bookmydrapp"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "bookmydrapp"
+    apiVersion: "apps/v1"
+  minReplicas: 1
