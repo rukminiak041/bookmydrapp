@@ -2,35 +2,35 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "bookmydrapp"
+  name: "bookmydeapp"
   namespace: "default"
   labels:
-    app: "bookmydrapp"
+    app: "bookmydeapp"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "bookmydrapp"
+      app: "bookmydeapp"
   template:
     metadata:
       labels:
-        app: "bookmydrapp"
+        app: "bookmydeapp"
     spec:
       containers:
       - name: "bookmydrapp-sha256-1"
-        image: "gcr.io/charged-ground-326209/github.com/rukminiak041/bookmydrapp@sha256:07ebf8915306f3eaf648149c5dd0b7b3e7a86dee55ac1a2580a80d321716b32e"
+        image: "gcr.io/charged-ground-326209/github.com/rukminiak041/bookmydrapp@sha256:a18932eff9a787c6bc60f1ccedbb05bf2cbcbc9fb8a79bd53df401ca354dc375"
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "bookmydrapp-hpa-dpjl"
+  name: "bookmydeapp-hpa-wodc"
   namespace: "default"
   labels:
-    app: "bookmydrapp"
+    app: "bookmydeapp"
 spec:
   scaleTargetRef:
     kind: "Deployment"
-    name: "bookmydrapp"
+    name: "bookmydeapp"
     apiVersion: "apps/v1"
   minReplicas: 1
   maxReplicas: 5
