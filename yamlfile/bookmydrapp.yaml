@@ -1,0 +1,41 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "bookmydeapp"
+  namespace: "default"
+  labels:
+    app: "bookmydeapp"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "bookmydeapp"
+  template:
+    metadata:
+      labels:
+        app: "bookmydeapp"
+    spec:
+      containers:
+      - name: "bookmydrapp-sha256-1"
+        image: "gcr.io/charged-ground-326209/github.com/rukminiak041/bookmydrapp@sha256:a18932eff9a787c6bc60f1ccedbb05bf2cbcbc9fb8a79bd53df401ca354dc375"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "bookmydeapp-hpa-wodc"
+  namespace: "default"
+  labels:
+    app: "bookmydeapp"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "bookmydeapp"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
